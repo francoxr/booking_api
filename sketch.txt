@@ -1,0 +1,54 @@
+sistema de reservas de habitación de un hotel.
+
+Flujo de operacion de reservacion
+
+1. una persona ingresa a una pagina web
+2. consulta la fecha 
+3. brinda habitaciones disponibles para tal fecha (get booking/ filter fechas) GET
+
+4. reserva la habitacion (create booking) POST
+5. ingresa sus datos (create client) POST
+6. ingresa datos de su tarjeta , se valida el pago (update booking) PUT
+
+
+---------------------------------------------------------
+Client
+
+POST /client       => create one
+GET /client        -> all 
+GET /client/:id    -> one 
+PUT /client/:id     > update one 
+DELETE /client/:id  > delete one
+
+Room
+
+POST /room       => create one
+GET /room        -> all 
+GET /room/:id    -> one 
+PUT /room/:id     > update one 
+DELETE /room/:id  > delete one
+
+Payment Method
+
+POST /paymentmethod       => create one
+GET /paymentmethod        -> all 
+GET /paymentmethod/:id    -> one 
+PUT /paymentmethod/:id     > update one 
+DELETE /paymentmethod/:id  > delete one
+
+Invoice
+
+POST /invoice       => create one
+GET /invoice        -> all 
+GET /invoice/:id    -> one 
+PUT /invoice/:id     > update one 
+DELETE /invoice/:id  > delete one
+
+Booking
+
+POST /booking       => create one
+GET /booking        -> all 
+GET /booking/:id    -> one 
+PUT /booking/:id     > update one 
+DELETE /booking/:id  > delete one
+
