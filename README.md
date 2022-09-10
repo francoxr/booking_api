@@ -25,6 +25,11 @@ docker-compose run web python manage.py makemigrations api
 docker-compose run web python manage.py migrate api
 ```
 
+
+# Nota
+
+Dentro de este readme , se encuentra ejemplos de la API en la seccion API. Ademas adjunto un archivo llamado Documentation , el cual brinda mas detalles acerca de la aplicacion y del flujo
+
 # API
 
 ## Client
