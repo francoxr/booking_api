@@ -9,7 +9,7 @@ class Client(models.Model):
     last_name = models.CharField("Apellido", max_length=255)
     email = models.CharField("Email", max_length=255)
     phone = models.IntegerField("Phone")
-    is_company = models.BooleanField("Es empresa")
+    is_company = models.BooleanField("Es empresa", default=False)
 
     created = models.DateTimeField("creado", auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
@@ -52,10 +52,10 @@ class Booking(models.Model):
     ]
 
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
-    invoice = models.ForeignKey(Invoice, on_delete=models.CASCADE)
+    invoice = models.ForeignKey(Invoice, on_delete=models.CASCADE, blank=True, null=True)
 
-    date_start = models.DateTimeField("Fecha de Inicio")
-    date_end = models.DateTimeField("Fecha de Fin")
+    date_start = models.DateField("Fecha de Inicio")
+    date_end = models.DateField("Fecha de Fin")
     day_stay = models.IntegerField("Dias de Estadia")
 
     state = models.CharField("Estado", choices=STATE, default="PE", max_length=255)

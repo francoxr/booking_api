@@ -7,7 +7,16 @@ from api.serializers import ClientSerializer, RoomSerializer, PaymentMethodSeria
 
 # ------ Client -------
 class ClientView(APIView):
+    # list
+    def get(self, request):
+        clients = Client.objects.all()
+        if clients:
+            clients_serializers = ClientSerializer(clients, many=True)
+            return Response(clients_serializers.data, status=status.HTTP_200_OK)
+        return Response({"message": "No existen Clientes"}, status=status.HTTP_400_BAD_REQUEST)
 
+
+class ClientCreateView(APIView):
     # list
     def get(self, request):
         clients = Client.objects.all()
@@ -26,8 +35,16 @@ class ClientView(APIView):
 
 
 class ClientDetailView(APIView):
-
     # retrieve
+    def get(self, request, pk):
+        client = Client.objects.filter(id=pk).first()
+        if client:
+            client_serializer = ClientSerializer(client)
+            return Response(client_serializer.data, status=status.HTTP_200_OK)
+        return Response({"message": "Cliente No existe"}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ClientUpdateView(APIView):
     def get(self, request, pk):
         client = Client.objects.filter(id=pk).first()
         if client:
@@ -56,7 +73,15 @@ class ClientDetailView(APIView):
             return Response(client_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         return Response({"message": "Cliente No existe"}, status=status.HTTP_400_BAD_REQUEST)
 
-    # delete
+
+class ClientDeleteView(APIView):
+    def get(self, request, pk):
+        client = Client.objects.filter(id=pk).first()
+        if client:
+            client_serializer = ClientSerializer(client)
+            return Response(client_serializer.data, status=status.HTTP_200_OK)
+        return Response({"message": "Cliente No existe"}, status=status.HTTP_400_BAD_REQUEST)
+
     def delete(self, request, pk):
         client = Client.objects.filter(id=pk).first()
         if client:
@@ -67,6 +92,17 @@ class ClientDetailView(APIView):
 
 # ------ Room -------
 class RoomView(APIView):
+
+    # list
+    def get(self, request):
+        rooms = Room.objects.all()
+        if rooms:
+            rooms_serializers = RoomSerializer(rooms, many=True)
+            return Response(rooms_serializers.data, status=status.HTTP_200_OK)
+        return Response({"message": "No existen Cuartos"}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class RoomCreateView(APIView):
 
     # list
     def get(self, request):
@@ -88,6 +124,15 @@ class RoomView(APIView):
 class RoomDetailView(APIView):
 
     # retrieve
+    def get(self, request, pk):
+        room = Room.objects.filter(id=pk).first()
+        if room:
+            room_serializer = RoomSerializer(room)
+            return Response(room_serializer.data, status=status.HTTP_200_OK)
+        return Response({"message": "Cuarto No existe"}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class RoomUpdateView(APIView):
     def get(self, request, pk):
         room = Room.objects.filter(id=pk).first()
         if room:
@@ -117,6 +162,16 @@ class RoomDetailView(APIView):
             return Response(room_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         return Response({"message": "Cuarto No existe"}, status=status.HTTP_400_BAD_REQUEST)
 
+
+class RoomDeleteView(APIView):
+    # retrieve
+    def get(self, request, pk):
+        room = Room.objects.filter(id=pk).first()
+        if room:
+            room_serializer = RoomSerializer(room)
+            return Response(room_serializer.data, status=status.HTTP_200_OK)
+        return Response({"message": "Cuarto No existe"}, status=status.HTTP_400_BAD_REQUEST)
+
     # delete
     def delete(self, request, pk):
         room = Room.objects.filter(id=pk).first()
@@ -137,6 +192,17 @@ class PaymentMethodView(APIView):
             return Response(payment_method_serializers.data, status=status.HTTP_200_OK)
         return Response({"message": "No existen Metodos de Pago"}, status=status.HTTP_400_BAD_REQUEST)
 
+
+class PaymentMethodCreateView(APIView):
+
+    # list
+    def get(self, request):
+        payment_method = PaymentMethod.objects.all()
+        if payment_method:
+            payment_method_serializers = PaymentMethodSerializer(payment_method, many=True)
+            return Response(payment_method_serializers.data, status=status.HTTP_200_OK)
+        return Response({"message": "No existen Metodos de Pago"}, status=status.HTTP_400_BAD_REQUEST)
+
     # create
     def post(self, request):
         payment_method_serializers = PaymentMethodSerializer(data=request.data)
@@ -148,6 +214,16 @@ class PaymentMethodView(APIView):
 
 class PaymentMethodDetailView(APIView):
 
+    # retrieve
+    def get(self, request, pk):
+        payment_method = PaymentMethod.objects.filter(id=pk).first()
+        if payment_method:
+            payment_method_serializer = PaymentMethodSerializer(payment_method)
+            return Response(payment_method_serializer.data, status=status.HTTP_200_OK)
+        return Response({"message": "Metodo de Pago No existe"}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class PaymentMethodUpdateView(APIView):
     # retrieve
     def get(self, request, pk):
         payment_method = PaymentMethod.objects.filter(id=pk).first()
@@ -178,6 +254,16 @@ class PaymentMethodDetailView(APIView):
             return Response(payment_method_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         return Response({"message": "Metodo de Pago No existe"}, status=status.HTTP_400_BAD_REQUEST)
 
+
+class PaymentMethodDelete(APIView):
+    # retrieve
+    def get(self, request, pk):
+        payment_method = PaymentMethod.objects.filter(id=pk).first()
+        if payment_method:
+            payment_method_serializer = PaymentMethodSerializer(payment_method)
+            return Response(payment_method_serializer.data, status=status.HTTP_200_OK)
+        return Response({"message": "Metodo de Pago No existe"}, status=status.HTTP_400_BAD_REQUEST)
+
     # delete
     def delete(self, request, pk):
         payment_method = PaymentMethod.objects.filter(id=pk).first()
@@ -198,6 +284,17 @@ class InvoiceView(APIView):
             return Response(invoice_serializers.data, status=status.HTTP_200_OK)
         return Response({"message": "No existen Facturas"}, status=status.HTTP_400_BAD_REQUEST)
 
+
+class InvoiceCreateView(APIView):
+
+    # list
+    def get(self, request):
+        invoice = Invoice.objects.all()
+        if invoice:
+            invoice_serializers = InvoiceSerializer(invoice, many=True)
+            return Response(invoice_serializers.data, status=status.HTTP_200_OK)
+        return Response({"message": "No existen Facturas"}, status=status.HTTP_400_BAD_REQUEST)
+
     # create
     def post(self, request):
         invoice_serializers = InvoiceSerializer(data=request.data)
@@ -209,6 +306,16 @@ class InvoiceView(APIView):
 
 class InvoiceDetailView(APIView):
 
+    # retrieve
+    def get(self, request, pk):
+        invoice = Invoice.objects.filter(id=pk).first()
+        if invoice:
+            invoice_serializer = InvoiceSerializer(invoice)
+            return Response(invoice_serializer.data, status=status.HTTP_200_OK)
+        return Response({"message": "Factura No existe"}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class InvoiceUpdateView(APIView):
     # retrieve
     def get(self, request, pk):
         invoice = Invoice.objects.filter(id=pk).first()
@@ -239,6 +346,16 @@ class InvoiceDetailView(APIView):
             return Response(invoice_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         return Response({"message": "Factura No existe"}, status=status.HTTP_400_BAD_REQUEST)
 
+
+class InvoiceDeleteView(APIView):
+    # retrieve
+    def get(self, request, pk):
+        invoice = Invoice.objects.filter(id=pk).first()
+        if invoice:
+            invoice_serializer = InvoiceSerializer(invoice)
+            return Response(invoice_serializer.data, status=status.HTTP_200_OK)
+        return Response({"message": "Factura No existe"}, status=status.HTTP_400_BAD_REQUEST)
+
     # delete
     def delete(self, request, pk):
         invoice = Invoice.objects.filter(id=pk).first()
@@ -250,6 +367,17 @@ class InvoiceDetailView(APIView):
 
 # ------ Booking -------
 class BookingView(APIView):
+
+    # list
+    def get(self, request):
+        bookings = Booking.objects.all()
+        if bookings:
+            bookings_serializers = BookingSerializer(bookings, many=True)
+            return Response(bookings_serializers.data, status=status.HTTP_200_OK)
+        return Response({"message": "No existen Reservaciones"}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class BookingCreateView(APIView):
 
     # list
     def get(self, request):
@@ -278,6 +406,16 @@ class BookingDetailView(APIView):
             return Response(booking_serializer.data, status=status.HTTP_200_OK)
         return Response({"message": "Reservacion No existe"}, status=status.HTTP_400_BAD_REQUEST)
 
+
+class BookingUpdateView(APIView):
+    # retrieve
+    def get(self, request, pk):
+        booking = Booking.objects.filter(id=pk).first()
+        if booking:
+            booking_serializer = BookingSerializer(booking)
+            return Response(booking_serializer.data, status=status.HTTP_200_OK)
+        return Response({"message": "Reservacion No existe"}, status=status.HTTP_400_BAD_REQUEST)
+
     # update
     def patch(self, request, pk):
         booking = Booking.objects.filter(id=pk).first()
@@ -298,6 +436,16 @@ class BookingDetailView(APIView):
                 booking_serializer.save()
                 return Response(booking_serializer.data, status=status.HTTP_200_OK)
             return Response(booking_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response({"message": "Reservacion No existe"}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class BookingDeleteView(APIView):
+    # retrieve
+    def get(self, request, pk):
+        booking = Booking.objects.filter(id=pk).first()
+        if booking:
+            booking_serializer = BookingSerializer(booking)
+            return Response(booking_serializer.data, status=status.HTTP_200_OK)
         return Response({"message": "Reservacion No existe"}, status=status.HTTP_400_BAD_REQUEST)
 
     # delete
